@@ -22,14 +22,17 @@ public class Main
 			//System.out.print((char)temp.genOutChar());
 			
 		//}
-		System.setProperty("gnu.io.rxtx.SerialPorts", "/dev/ttyACM0");
-		elCommander temp = new elCommander("/dev/ttyACM0");
+		System.setProperty("gnu.io.rxtx.SerialPorts", "/dev/ttyACM2");
+		elCommander temp = new elCommander("/dev/ttyACM2");
 		temp.pinWriteDigital(13, true);
 		Thread.sleep(4000);
 		temp.pinWriteDigital(13, false);
 		//COMPORT.listPorts();
-		temp.pinReadAnalog(5);
-		temp.pinReadAnalog(5);
+		Thread.sleep(100);
+		long bla =  temp.pinReadAnalog(5);
+		System.out.printf("ARead: %d\n", bla);
+		bla =  temp.pinReadAnalog(4);
+		System.out.printf("ARead: %d\n", bla);
 	}
 
 }

@@ -49,8 +49,8 @@ public class COMPORT  implements SerialPortEventListener
                 
                 in = serialPort.getInputStream();
                 out =  serialPort.getOutputStream();
-                serialPort.addEventListener(this);
-    			serialPort.notifyOnDataAvailable(true);
+                //serialPort.addEventListener(this);
+    			//serialPort.notifyOnDataAvailable(true);
     			//serialPort.
             }
             else
@@ -67,52 +67,42 @@ public class COMPORT  implements SerialPortEventListener
     
     public void writeByte( byte data ) throws IOException
     {
-    	out.write(0xfb);
+    	//out.write(0xfb);
+    	chunk = null;
     	out.write(data);
     	out.flush();
     	//out.flush();
     }
     
-    public int read() throws IOException
+    public long read() throws IOException, InterruptedException
     {
-    	int ret = 0;
+    	//try{
+    	long ret = 0;
     	String temp = "";
-    	while( !data )
+    	while( in.available() <2 )
     	{
+    		Thread.sleep(10);
     	}
-    	for(byte i : chunk )
+    	/*for(byte i : chunk )
     	{
     		temp += (char)i;
-    	}
-    	System.out.println("IHAS STRING: " + temp);
-    	return Integer.parseInt(temp);
+    	}*/
+    	byte one = (byte)in.read();
+    	byte two = (byte)in.read();
+    	System.out.printf("Byte one: %x, Byte Two: %x\n", one, two);
+    	ret = one & 0x000000ff;
+    	System.out.printf("Ret Now: %d\n", ret);
+    	ret += two * 256;
+    	System.out.printf("Ret Now: %d\n", ret);
+    	chunk = null;
+    	data = false;
+    	//System.out.println("IHAS STRING: " + temp);
+    	return ret;//Integer.parseInt(temp);
+    	
+    	/*}
+    	catch(Exception e){return 0;}*/
     }
     
-    public void flushIn()
-    {
-		try
-		{
-			System.out.print("Flushed: ");
-			while( bytesAvaliable() > 0 )
-			{
-				try
-				{
-					System.out.print( in.read() );
-				}
-				catch (IOException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("");
-    }
     static void listPorts()
     {
         java.util.Enumeration<CommPortIdentifier> portEnum = CommPortIdentifier.getPortIdentifiers();
@@ -145,7 +135,7 @@ public class COMPORT  implements SerialPortEventListener
 	@Override
 	public void serialEvent(SerialPortEvent arg0)
 	{
-		System.out.print("lol");
+		//System.out.print("lol");
 		if (arg0.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
 			try {
 				int available = in.available();
@@ -153,7 +143,7 @@ public class COMPORT  implements SerialPortEventListener
 				in.read(chunk, 0, available);
 				data = true;
 				// Displayed results are codepage dependent
-				//System.out.print(new String(chunk));
+				//System.out.print( new String(chunk));
 			} catch (Exception e) {
 				System.err.println(e.toString());
 			}

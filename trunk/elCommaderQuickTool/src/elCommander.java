@@ -9,7 +9,7 @@ public class elCommander
 	{
 		
 		serial = new COMPORT(dev);
-		serial.flushIn();
+		//serial.flushIn();
 	}
 	
 	public void pinWriteDigital( int pin, boolean value )
@@ -20,18 +20,13 @@ public class elCommander
 			try
 			{
 				serial.writeByte(temp.genOutChar());
-				System.out.print("Wrote: " + (char)temp.genOutChar() + "\n");
-				Thread.sleep(100);
+				//System.out.print("Wrote: " + (char)temp.genOutChar() + "\n");
+				//Thread.sleep(200);
 				
-				System.out.print("Read: " + serial.read() + "\n");
+				//System.out.print("Read: " + serial.read() + "\n");
 				//serial.flushIn();
 			}
 			catch (IOException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			catch (InterruptedException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -49,13 +44,13 @@ public class elCommander
 			try
 			{
 				serial.writeByte(temp.genOutChar());
-				System.out.print("Wrote: " + (char)temp.genOutChar() + "\n");
-				Thread.sleep(100);
+				//System.out.print("Wrote: " + (char)(0 | temp.genOutChar()) + "\n");
+				//Thread.sleep(50);
 				/*while( serial.bytesAvaliable() <= 0 )
 				{
 				}*/
-				int read = serial.read();
-				System.out.print("Read: " + read + "\n");
+				long read = serial.read();
+				
 				ret = (read) == 1 ? true : false;
 				//serial.flushIn();
 			}
@@ -75,9 +70,9 @@ public class elCommander
 		return ret;
 	}
 	
-	public int pinReadAnalog( int pin)
+	public long pinReadAnalog( int pin)
 	{
-		int ret = 0;
+		long ret = 0;
 		if( pin >= 0 && pin <= 13 )
 		{
 			CCommand temp = new CCommand(1, 1, 0, pin);
@@ -85,14 +80,14 @@ public class elCommander
 			try
 			{
 				serial.writeByte(temp.genOutChar());
-				System.out.print("Wrote: " + (char)temp.genOutChar() + "\n");
-				Thread.sleep(100);
+				System.out.print("Wrote: " + (char)(0 | temp.genOutChar()) + "\n");
+				//Thread.sleep(200);
 				/*while( serial.bytesAvaliable() <= 0 )
 				{
 				}*/
 				//
 				//byte read2 = serial.readByte();
-				int read = serial.read();
+				long read = serial.read();
 				ret = read;
 				System.out.printf("ARead: %d\n", read);
 				//serial.flushIn();
