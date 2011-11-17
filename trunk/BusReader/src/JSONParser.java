@@ -12,36 +12,42 @@ public class JSONParser {
 	private ArrayList<String> ids;
 	private JSONObject id;
 
+	private ArrayList<JSONObject> buses = new ArrayList<JSONObject>();
+
 	public JSONParser(String input) {
 		JsonString = input;
 
 		Object obj = JSONValue.parse(JsonString);
-		
+
 		if (obj == null)
 			System.out.println("Obj is null");
 
-	JSONArray array = (JSONArray) obj;
-		
-//		JSONArray array=new JSONArray();
-//		  array.add("hello");
-//		  array.add(new Integer(123));
-//		  array.add(new Boolean(false));
-//		  array.add(null);
-//		  array.add(new Double(123.45));
-		  //System.out.print(array);
+		JSONArray array = (JSONArray) obj;
 
-		if (array != null ){
-			id = (JSONObject) array.get(1);
-			
-			
+		if (array != null) {
+
+			for (int i = 0; i < array.size(); i++) {
+
+				id = (JSONObject) array.get(i);
+				
+				String color = (String)id.get("color");
+
+				if (color.compareTo("red") == 0  || color.compareTo("blue") == 0 ) {
+					buses.add((JSONObject) array.get(i));
+				}
+			}
 		}
-		
-		//else
-			//id = "NULL";
 
+		// else
+		// id = "NULL";
+
+	}
+
+	public JSONObject getString() {
+		return id;
 	}
 	
-	public JSONObject getString(){
-		return id; 
-	}
+	public ArrayList<JSONObject> getBuses(){
+		return buses;
+	}	
 }
