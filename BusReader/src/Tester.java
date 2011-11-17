@@ -5,7 +5,12 @@ import org.json.simple.JSONObject;
 public class Tester {
 	
 	static ArrayList<BusStop> busStops = new ArrayList<BusStop>();
+	static ArrayList<Bus> buses = new ArrayList<Bus>();
+	static ArrayList<JSONObject> jsonObjects = new ArrayList<JSONObject>();
 	
+	 private static final int RED = 0;
+	 private static final int BLUE = 1;
+	 
 	public static void main(String[] args) {
 		String s = ("[{\"id\":\"440\",\"color\":\"red\",\"lat\":33.7875,\"lng\":-84.405425,\"plat\":33.787472,\"plng\":-84.405443,\"speed\":0}," +
 				"{\"id\":\"436\",\"color\":\"green\",\"lat\":33.773795,\"lng\":-84.401693,\"plat\":33.774035,\"plng\":-84.40209,\"speed\":31.65068}," +
@@ -21,9 +26,6 @@ public class Tester {
 																								"{\"id\":\"443\",\"color\":\"blue\",\"lat\":33.771595,\"lng\":-84.39555,\"plat\":33.77217,\"plng\":-84.395543,\"speed\":20.0942}," +
 																										"{\"id\":\"434\",\"color\":\"blue\",\"lat\":33.787328,\"lng\":-84.40615,\"plat\":33.787345,\"plng\":-84.406113,\"speed\":0}," +
 																												"{\"id\":\"433\",\"color\":\"blue\",\"lat\":33.787422,\"lng\":-84.406073,\"plat\":33.787445,\"plng\":-84.406038,\"speed\":0}]");
-		
-//		System.setProperty("gnu.io.rxtx.SerialPorts", "/dev/ttyACM2");
-//		elCommander temp = new elCommander("/dev/ttyACM2");
 		
 		
 		elCommanderI commander = new elTest();
@@ -75,11 +77,35 @@ public class Tester {
 		temp = new BusStop(10);
 		temp.addPointContainer(33.788551555261134, -84.40024458885193, 33.77268482129236, -84.40634558486938);
 		busStops.add(temp);
-		
-		//System.out.println("-----------" + point.isLocation(inPoint))
-		
+	
 		
 		PointD point2 = new PointD( (Double)obj.get("lat"),  (Double)obj.get("lng"));
+		
+		jsonObjects = parser.getBuses();
+		
+		String color;
+		int colorId = 0;
+		int id;
+		
+		System.out.println("Size: " + jsonObjects.size());
+		
+		for(int x = 0; x < jsonObjects.size(); x++)
+		{
+			System.out.println(jsonObjects.get(x).get("color"));
+			
+			color = (String) jsonObjects.get(x).get("color");
+			
+			if(color.compareTo("red") == 0)
+				colorId = RED;
+			
+			else if(color.compareTo("blue") == 0)
+				colorId = BLUE;
+					
+			id = Integer.parseInt((String)jsonObjects.get(x).get("id"));
+			buses.add(new Bus(id, colorId));
+			
+		}
+		
 		
 		
 		for(int i = 0; i < busStops.size(); i++){
@@ -93,10 +119,17 @@ public class Tester {
 			}
 			
 		}
+
+		
+		for(int i = 0; i < buses.size(); i++){
+			
+			System.out.println("Color: " + buses.get(i).getColor());
+			System.out.println("ID: " + buses.get(i).getId());		
+		}
+
 		
 		
-		System.out.println("Valid: " + point.isLocation(point2));
-
-
+		
+		//System.out.println("Valid: " + point.isLocation(point2));
 	}
 }
