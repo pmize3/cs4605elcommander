@@ -43,7 +43,7 @@ public class JSONParser {
 
 				String color = (String) id.get("color");
 
-				if (color.compareTo("red") == 0 || color.compareTo("blue") == 0) {
+				if (color != null && (color.compareTo("red") == 0 || color.compareTo("blue") == 0)) {
 					buses.add((JSONObject) array.get(i));
 				}
 			}
