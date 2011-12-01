@@ -1,6 +1,7 @@
 public class Bus {
 
 	BusStop prevStop;
+	BusStop currentStop;
 	PointD currentPoint;
 	int id;
 	int color;
@@ -13,7 +14,6 @@ public class Bus {
 		id = inID;
 		color = inColor;
 	}
-
 	
 	
 	public PointD getCurrentPoint() {
@@ -21,6 +21,7 @@ public class Bus {
 	}
 
 	public void setCurrentPoint(PointD currentPoint) {
+		
 		this.currentPoint = currentPoint;
 	}
 
@@ -46,6 +47,29 @@ public class Bus {
 
 	public void setColor(int color) {
 		this.color = color;
+	}
+
+
+	public BusStop getCurrentStop() {
+		return currentStop;
+	}
+
+
+	public void setCurrentStop(BusStop currentStop) {
+		prevStop = this.currentStop;
+		
+		if(prevStop == null){
+			currentStop.writePort(true);
+		}
+			
+		
+		if(prevStop != currentStop && prevStop != null){
+			prevStop.writePort(false);
+			currentStop.writePort(true);
+		}
+		
+		this.currentStop = currentStop;
+		
 	}
 
 }

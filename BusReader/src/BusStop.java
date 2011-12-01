@@ -5,11 +5,13 @@ public class BusStop {
 
 	ArrayList<PointContainer> busStop = new ArrayList<PointContainer>();
 	int port;
+	boolean writePort;
+	elCommanderI commander;
 
-	public BusStop(int portNum){
+	public BusStop(int portNum, elCommanderI commander){
 		
 		port = portNum;
-		
+		this.commander = commander;
 	}
 	
 	public ArrayList<PointContainer> getBusStop() {
@@ -26,6 +28,12 @@ public class BusStop {
 
 	public void setPort(int port) {
 		this.port = port;
+	}
+	
+	public void writePort(boolean write){
+		writePort = write;
+		commander.pinWriteDigital(this.port, write);
+		System.out.println("Wrote Port Pin: " + port + " Write: " + write);
 	}
 
 	public void addPointContainer(double x1, double y1, double x2, double y2){
