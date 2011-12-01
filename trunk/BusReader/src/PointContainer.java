@@ -14,7 +14,7 @@ public class PointContainer {
 	public boolean isLocation(PointD inPoint) {
 		boolean ret = true;
 
-		if (!(inPoint.getX() > bottom.getX())) {
+		if (!(Math.abs(inPoint.getX()) > Math.abs(bottom.getX()))) {
 
 			ret = false;
 			//System.out.println("inPoint:" + inPoint.getX());
@@ -29,7 +29,7 @@ public class PointContainer {
 			//System.out.println("Fail 2");
 		}
 
-		if (!(inPoint.getX() < top.getX())) {
+		if (!(Math.abs(inPoint.getX()) < Math.abs(top.getX()))) {
 
 			ret = false;
 			//System.out.println("Fail 3");

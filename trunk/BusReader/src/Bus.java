@@ -1,6 +1,7 @@
 public class Bus {
 
 	BusStop prevStop;
+	PointD currentPoint;
 	int id;
 	int color;
 
@@ -11,6 +12,16 @@ public class Bus {
 
 		id = inID;
 		color = inColor;
+	}
+
+	
+	
+	public PointD getCurrentPoint() {
+		return currentPoint;
+	}
+
+	public void setCurrentPoint(PointD currentPoint) {
+		this.currentPoint = currentPoint;
 	}
 
 	public BusStop getPrevStop() {
