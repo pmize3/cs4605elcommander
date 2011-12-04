@@ -28,7 +28,9 @@ public class Tester {
 
 	public static void main(String[] args) throws MalformedURLException {
 
-		elCommanderI commander = new elTest();
+		System.setProperty("gnu.io.rxtx.SerialPorts", "/dev/ttyACM1");
+		elCommanderI commander = new elCommander("/dev/ttyACM1");
+
 
 		BusStop temp = new BusStop(2, commander);
 		temp.addPointContainer(-84.405223, 33.780159, -84.402691, 33.778964);
@@ -92,14 +94,21 @@ public class Tester {
 			Bus bus;
 
 			for (int x = 0; x < jsonObjects.size(); x++) {
-
+				boolean filter = false;
 				color = (String) jsonObjects.get(x).get("color");
 
 				if (color.compareTo("red") == 0)
+				{
 					colorId = RED;
+					filter = true;
+				}
 
 				else if (color.compareTo("blue") == 0)
+				{
 					colorId = BLUE;
+					filter = true;
+				  }
+				
 
 				id = Integer.parseInt((String) jsonObjects.get(x).get("id"));
 			
@@ -115,14 +124,14 @@ public class Tester {
 				currentPoint = new PointD((Double) jsonObjects.get(x)
 						.get("lng"), (Double) jsonObjects.get(x).get("lat"));
 				
-				if(found < 0 ){
+				if(found < 0 && filter){
 
 					bus = new Bus(id, colorId);
 					bus.setCurrentPoint(currentPoint);
 					buses.add(bus);	
 				}
 				
-				else{
+				else if(filter){
 					buses.get(found).setCurrentPoint(currentPoint);
 				}
 
