@@ -28,16 +28,16 @@ public class Tester {
 
 	public static void main(String[] args) throws MalformedURLException {
 
-		System.setProperty("gnu.io.rxtx.SerialPorts", "/dev/ttyACM1");
-		elCommanderI commander = new elCommander("/dev/ttyACM1");
+		System.setProperty("gnu.io.rxtx.SerialPorts", "/dev/ttyACM0");
+		elCommanderI commander = new elCommander("/dev/ttyACM0");
 
 
-		BusStop temp = new BusStop(2, commander);
+		BusStop temp = new BusStop(0, commander);
 		temp.addPointContainer(-84.405223, 33.780159, -84.402691, 33.778964);
 		temp.addPointContainer(-84.405223, 33.780159, -84.403614, 33.777769);
 		busStops.add(temp);
 
-		temp = new BusStop(3, commander);
+		temp = new BusStop(2, commander);
 		temp.addPointContainer(-84.402112, 33.778964, -84.39885, 33.777716);
 		busStops.add(temp);
 
@@ -45,23 +45,23 @@ public class Tester {
 		temp.addPointContainer(-84.398099, 33.779499, -84.395159, 33.776699);
 		busStops.add(temp);
 
-		temp = new BusStop(5, commander);
+		temp = new BusStop(6, commander);
 		temp.addPointContainer(-84.394644, 33.777876, -84.391576, 33.776467);
 		busStops.add(temp);
 
-		temp = new BusStop(6, commander);
+		temp = new BusStop(8, commander);
 		temp.addPointContainer(-84.392563, 33.776164, -84.39134, 33.77356);
 		busStops.add(temp);
 
-		temp = new BusStop(7, commander);
+		temp = new BusStop(10, commander);
 		temp.addPointContainer(-84.393014, 33.773114, -84.390846, 33.769101);
 		busStops.add(temp);
 
-		temp = new BusStop(8, commander);
+		temp = new BusStop(12, commander);
 		temp.addPointContainer(-84.399515, 33.773899, -84.394516, 33.771544);
 		busStops.add(temp);
 
-		temp = new BusStop(9, commander);
+		temp = new BusStop(14, commander);
 		temp.addPointContainer(-84.403313, 33.777002, -84.400889, 33.774202);
 		busStops.add(temp);
 

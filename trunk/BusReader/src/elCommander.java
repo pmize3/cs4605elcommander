@@ -14,7 +14,7 @@ public class elCommander implements elCommanderI
 	
 	public void pinWriteDigital( int pin, boolean value )
 	{
-		if( pin >= 0 && pin <= 13 )
+		if( pin >= 0 && pin <= 15 )
 		{
 			CCommand temp = new CCommand(0, 0, (value) ? 1 : 0, pin);
 			try
