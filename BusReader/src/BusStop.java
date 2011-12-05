@@ -30,9 +30,14 @@ public class BusStop {
 		this.port = port;
 	}
 	
-	public void writePort(boolean write){
+	public void writePort(boolean write, boolean isRed){
 		writePort = write;
-		commander.pinWriteDigital(this.port, write);
+		if( isRed )
+		{
+			commander.pinWriteDigital(this.port+1, write);
+		}
+		else
+			commander.pinWriteDigital(this.port, write);
 		System.out.println("Wrote Port Pin: " + port + " Write: " + write);
 	}
 

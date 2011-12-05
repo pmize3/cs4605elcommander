@@ -48,7 +48,13 @@ public class Bus {
 	public void setColor(int color) {
 		this.color = color;
 	}
-
+	public boolean isRed()
+	{
+		if( this.color == RED )
+			return true;
+		else 
+			return false;
+	}
 
 	public BusStop getCurrentStop() {
 		return currentStop;
@@ -59,13 +65,13 @@ public class Bus {
 		prevStop = this.currentStop;
 		
 		if(prevStop == null){
-			currentStop.writePort(true);
+			currentStop.writePort(true, this.isRed());
 		}
 			
 		
 		if(prevStop != currentStop && prevStop != null){
-			prevStop.writePort(false);
-			currentStop.writePort(true);
+			prevStop.writePort(false,this.isRed());
+			currentStop.writePort(true,this.isRed());
 		}
 		
 		this.currentStop = currentStop;
